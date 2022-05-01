@@ -39,13 +39,11 @@ class Server{
 
     public function handleMiddlewares($routeData){
         if(isset($routeData['middleware'])){
-            $middlewares = include PROJECT_PATH."/config/middlewares.php";
-            if($middlewares[$routeData['middleware']]){
-                $middleware = new $middlewares[$routeData['middleware']]();
-                $response = $middleware->handle();
-                if(!$response){
-                    throw new \Exception("Unauthorized", 401);
-                }
+            $className = 'App\\Middlewares\\' . $routeData['middleware'];
+            $middleware = new $className();
+            $response = $middleware->handle();
+            if(!$response){
+                throw new \Exception("Unauthorized", 401);
             }
         }
     }
@@ -56,7 +54,6 @@ class Server{
             $routeParams = explode("@", $routeData[$type]);
             $className = 'App\\Controllers\\' . $routeParams[0];
             $controller = new $className();
-            var_dump($_POST);
             return $controller->{$routeParams[1]}($_POST);
         }
         else{

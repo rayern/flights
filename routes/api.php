@@ -1,7 +1,10 @@
 <?php 
 return [
+    '/login' => [
+        'POST' => 'LoginController@login',
+    ],
     '/search' => [
-        'middleware' => 'jwt',
+        'middleware' => 'Authorization',
         'POST' => 'FlightController@search',
     ],
 ];

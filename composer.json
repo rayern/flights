@@ -16,6 +16,7 @@
         }
     ],
     "require": {
-        "vlucas/phpdotenv": "dev-master"
+        "vlucas/phpdotenv": "dev-master",
+        "firebase/php-jwt": "dev-main"
     }
 }
