@@ -2,8 +2,7 @@
 return [
     '/search' => [
         'middleware' => 'jwt',
-        'post' => 'FlightController@search',
-        
+        'POST' => 'FlightController@search',
     ],
 ];
 ?>
