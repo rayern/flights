@@ -5,7 +5,6 @@ use App\Middlewares;
 use App\Controllers;
 
 class Server{
-
     public function handle($route)
     {
         try {
@@ -13,10 +12,10 @@ class Server{
             $this->handleMiddlewares($routeData);
             $response = $this->loadController($routeData);
             http_response_code($response['code']);
-            echo $response['data'];
+            echo json_encode(['success' => true, 'data' => $response['data']]);
         } catch (\Exception $e) {
             http_response_code($e->getCode());
-            echo $e->getMessage();
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
         } 
     }
 

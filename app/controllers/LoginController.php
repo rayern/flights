@@ -21,7 +21,7 @@ class LoginController
         $jwt = JWT::encode($token, $_ENV['SECRET_KEY'], 'HS256');
         return [
             'code' => 200,
-            'data' => json_encode(["message" => "Successful login", "jwt" => $jwt])
+            'data' => ["message" => "Successful login", "jwt" => $jwt]
         ];
     }
 }
