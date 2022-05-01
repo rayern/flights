@@ -2,7 +2,7 @@
 
 namespace App;
 use App\Middlewares;
-use App\Controllers;
+use App\Controllers\FlightController;
 
 class Server{
 
@@ -18,6 +18,7 @@ class Server{
                 'data' => $e->getMessage()
             ];
         } finally {
+
             http_response_code($response['code']);
             echo $response['data'];
         }
@@ -54,6 +55,8 @@ class Server{
 
     public function loadController($routeData){
         $type = $_SERVER['REQUEST_METHOD'];
+        //echo json_encode([$routeData, $type, get_declared_classes()]);
+        //exit;
         if(isset($routeData[$type])){
             $routeParams = explode("@", $routeData[$type]);
             $controller = new $routeParams[0]();

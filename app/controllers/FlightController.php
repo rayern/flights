@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controllers;
-
+echo "in flight controller";
 use App\Controllers\Controller as BaseController;
 
 class FlightController extends BaseController
