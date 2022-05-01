@@ -34,7 +34,7 @@ class Server{
                 return $webRoutes[$route];
             }
             else{
-                throw new Exception("Path not found", 404);
+                throw new \Exception("Path not found", 404);
             }
         }
     }
@@ -46,7 +46,7 @@ class Server{
                 $middleware = new $middlewares[$routeData['middleware']]();
                 $response = $middleware->handle();
                 if(!$response){
-                    throw new Exception("Unauthorized", 401);
+                    throw new \Exception("Unauthorized", 401);
                 }
             }
         }
@@ -60,7 +60,7 @@ class Server{
             return $controller->{$routeParams[1]}($_REQUEST);
         }
         else{
-            throw new Exception("Route not configured", 404);
+            throw new \Exception("Route not configured", 404);
         }
     }
 }
