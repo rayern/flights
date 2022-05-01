@@ -13,16 +13,12 @@ class Server{
             $routeData = $this->dispatchRouter($route);
             $this->handleMiddlewares($routeData);
             $response = $this->loadController($routeData);
-        } catch (\Exception $e) {
-            $response = [
-                'code' => $e->getCode(),
-                'data' => $e->getMessage()
-            ];
-        } finally {
-
             http_response_code($response['code']);
             echo $response['data'];
-        }
+        } catch (\Exception $e) {
+            http_response_code($e->getCode());
+            echo $e->getMessage();
+        } 
     }
 
     public function dispatchRouter($route){
@@ -58,8 +54,8 @@ class Server{
         $type = $_SERVER['REQUEST_METHOD'];
         if(isset($routeData[$type])){
             $routeParams = explode("@", $routeData[$type]);
-            if(is_file(PROJECT_PATH.'/app/controllers/'.$routeParams[0])){
-                require_once PROJECT_PATH.'/app/controllers/'.$routeParams[0];
+            if(is_file(PROJECT_PATH.'/app/controllers/'.$routeParams[0].".php")){
+                require_once PROJECT_PATH.'/app/controllers/'.$routeParams[0].".php";
                 $controller = new $routeParams[0]();
                 return $controller->{$routeParams[1]}($_REQUEST);
             }

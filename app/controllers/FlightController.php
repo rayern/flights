@@ -1,21 +1,10 @@
 <?php
 
 namespace App\Controllers;
-echo "in flight controller";
-use App\Controllers\Controller as BaseController;
 
-class FlightController extends BaseController
+class FlightController 
 {
-    private $user;
-    private $log;
-    private $template;
-
-    public function __construct(User $user)
-    {
-        parent::__construct();
-        $this->user = $user;
-        $this->log = new Log();
-        $this->template = new Template();
+    public function __construct(User $user){
     }
 
     public function createForm(){
@@ -23,6 +12,6 @@ class FlightController extends BaseController
     }
 
     public function search($request){
-        
+        return ['code' => 200, 'data' => "Flight"];
     }
 }
