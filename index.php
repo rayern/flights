@@ -5,10 +5,11 @@ use App\Server;
 use Dotenv\Dotenv;
 
 try {
+    $route = $_SERVER['PATH_INFO'] ?? "";
     $dotenv = Dotenv::createImmutable(__DIR__);
     $dotenv->load();
     $server = new Server();
-    $server->handle($_SERVER['PATH_INFO']);
+    $server->handle($route);
 } catch (\Exception $e) {
     echo $e->getMessage();
 }
