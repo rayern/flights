@@ -12,8 +12,8 @@ class FlightController
             $flightsData = Flight::fetch(); 
             foreach((array)$flightsData as $singleFlightData){
                 $departureDate = new \DateTime($singleFlightData['departure']);
-                if( $singleFlightData['origin'] == $request['origin'] && 
-                    $singleFlightData['destination'] == $request['destination'] &&
+                if( $singleFlightData['origin'] == trim($request['origin']) && 
+                    $singleFlightData['destination'] == trim($request['destination']) &&
                     $singleFlightData['availableSeats'] >= $request['passengers'] &&
                     $departureDate->format('Y-m-d') == $request['departure']
                     ){
@@ -23,7 +23,7 @@ class FlightController
             $message = 'Found '.count($resultData).' records';
         }
         else{
-            $message = 'Please check the request sent and try again';
+            $message = 'Invalid request. Please check and try again';
             $validRequest = false;
         }
         if($validRequest == true && count($resultData) == 0){
