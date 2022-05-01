@@ -1,10 +1,13 @@
 <?php
 
-    if (!isset($_SERVER['PATH_INFO']))
-    {
-        echo "Home page";
-        exit();
-    }
+require __DIR__ . '/app/autoload.php';
+use App\Server;
 
-    print "The request path is : ".$_SERVER['PATH_INFO'];
+try {
+    $server = new Server();
+    $server->handle($_SERVER['PATH_INFO']);
+} catch (\Exception $e) {
+    echo $e->getMessage();
+}
+
 ?>
