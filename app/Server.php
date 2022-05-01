@@ -1,8 +1,9 @@
 <?php
-namespace App\Server;
 
+namespace App\Server;
 use App\Middlewares;
 use App\Controllers;
+echo "in server<hr>";
 
 class Server{
 
