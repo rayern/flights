@@ -2,7 +2,8 @@
 
 namespace App;
 use App\Middlewares;
-use App\Controllers\FlightController;
+use App\Controllers;
+
 
 class Server{
 
@@ -25,12 +26,12 @@ class Server{
     }
 
     public function dispatchRouter($route){
-        $apiRoutes = include __DIR__."/../routes/api.php";
+        $apiRoutes = include PROJECT_PATH."/routes/api.php";
         if($apiRoutes[$route]){
             return $apiRoutes[$route];
         }
         else{
-            $webRoutes = include __DIR__."/../routes/web.php";
+            $webRoutes = include PROJECT_PATH."/routes/web.php";
             if($webRoutes[$route]){
                 return $webRoutes[$route];
             }
@@ -42,7 +43,7 @@ class Server{
 
     public function handleMiddlewares($routeData){
         if(isset($routeData['middleware'])){
-            $middlewares = include __DIR__."/../config/middlewares.php";
+            $middlewares = include PROJECT_PATH."/config/middlewares.php";
             if($middlewares[$routeData['middleware']]){
                 $middleware = new $middlewares[$routeData['middleware']]();
                 $response = $middleware->handle();
@@ -55,12 +56,14 @@ class Server{
 
     public function loadController($routeData){
         $type = $_SERVER['REQUEST_METHOD'];
-        //echo json_encode([$routeData, $type, get_declared_classes()]);
-        //exit;
         if(isset($routeData[$type])){
             $routeParams = explode("@", $routeData[$type]);
-            $controller = new $routeParams[0]();
-            return $controller->{$routeParams[1]}($_REQUEST);
+            if(is_file(PROJECT_PATH.'/app/controllers/'.$routeParams[0])){
+                require_once PROJECT_PATH.'/app/controllers/'.$routeParams[0];
+                $controller = new $routeParams[0]();
+                return $controller->{$routeParams[1]}($_REQUEST);
+            }
+            
         }
         else{
             throw new \Exception("Route not configured", 404);
