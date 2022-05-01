@@ -1,10 +1,12 @@
 <?php
 define("PROJECT_PATH", __DIR__);
 require PROJECT_PATH . '/vendor/autoload.php';
-//require PROJECT_PATH . '/autoload.php';
 use App\Server;
+use Dotenv\Dotenv;
 
 try {
+    $dotenv = Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
     $server = new Server();
     $server->handle($_SERVER['PATH_INFO']);
 } catch (\Exception $e) {
