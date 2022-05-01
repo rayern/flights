@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\FlightController;
+namespace App\Controllers;
 
 use App\Controllers\Controller as BaseController;
 
@@ -10,11 +10,6 @@ class FlightController extends BaseController
     private $log;
     private $template;
 
-    /**
-    * User Controller construct
-    *
-    * @param User $user User
-    */
     public function __construct(User $user)
     {
         parent::__construct();
@@ -23,13 +18,11 @@ class FlightController extends BaseController
         $this->template = new Template();
     }
 
-    /**
-    * Created User Form
-    *
-    * @return void
-    */
-    public function createForm()
-    {
+    public function createForm(){
         return template('admin', 'admin.users.create');
+    }
+
+    public function search($request){
+        
     }
 }
