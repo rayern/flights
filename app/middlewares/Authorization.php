@@ -2,6 +2,7 @@
 
 namespace App\Middlewares;
 use \Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class Authorization
 {
@@ -9,7 +10,7 @@ class Authorization
         
         try {
             $jwt = $_SERVER['HTTP_BEARER'];
-            $decoded = JWT::decode($jwt, $_ENV['SECRET_KEY'], 'HS256');
+            $decoded = JWT::decode($jwt, new Key($_ENV['SECRET_KEY'], 'HS256'));
             $authValid = true;
         } catch (\Exception $e) {
             echo $e->getMessage();

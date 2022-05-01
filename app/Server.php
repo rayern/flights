@@ -38,9 +38,14 @@ class Server{
 
     public function handleMiddlewares($routeData){
         if(isset($routeData['middleware'])){
-            $className = 'App\\Middlewares\\' . $routeData['middleware'];
-            $middleware = new $className();
-            $response = $middleware->handle();
+            
+            $classPath = PROJECT_PATH.'/app/middlewares/'.$routeData['middleware'].".php";
+            if($classPath){
+                require_once $classPath;
+                $className = 'App\\Middlewares\\' . $routeData['middleware'];
+                $middleware = new $className();
+                return $middleware->handle($_REQUEST);
+            }
             if(!$response){
                 throw new \Exception("Unauthorized", 401);
             }
