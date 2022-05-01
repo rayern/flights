@@ -3,7 +3,7 @@
 namespace App;
 use App\Middlewares;
 use App\Controllers;
-
+use App\Controllers\FlightController;
 
 class Server{
 
@@ -54,12 +54,10 @@ class Server{
         $type = $_SERVER['REQUEST_METHOD'];
         if(isset($routeData[$type])){
             $routeParams = explode("@", $routeData[$type]);
-            if(is_file(PROJECT_PATH.'/app/controllers/'.$routeParams[0].".php")){
-                require_once PROJECT_PATH.'/app/controllers/'.$routeParams[0].".php";
-                $controller = new $routeParams[0]();
-                return $controller->{$routeParams[1]}($_REQUEST);
-            }
-            
+            $className = 'App\\Controllers\\' . $routeParams[0];
+            $controller = new $className();
+            var_dump($_POST);
+            return $controller->{$routeParams[1]}($_POST);
         }
         else{
             throw new \Exception("Route not configured", 404);
