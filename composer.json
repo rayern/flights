@@ -1,0 +1,19 @@
+{
+    "name": "saeesh/flights",
+    "description": "Flight Search Application",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Saeesh\\Flights\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Saeesh",
+            "email": "saeeshtendulkar@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "dev-master"
+    }
+}

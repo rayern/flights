@@ -1,6 +1,7 @@
 <?php
-
-require __DIR__ . '/App/autoload.php';
+define("PROJECT_PATH", __DIR__);
+require PROJECT_PATH . '/vendor/autoload.php';
+require PROJECT_PATH . '/autoload.php';
 use App\Server;
 
 try {
