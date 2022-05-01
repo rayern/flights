@@ -3,7 +3,6 @@
 namespace App;
 use App\Middlewares;
 use App\Controllers;
-use App\Controllers\FlightController;
 
 class Server{
 
