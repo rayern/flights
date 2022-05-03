@@ -8,8 +8,11 @@
             "App\\Controllers\\":"app/controllers",
             "App\\Middlewares\\":"app/middlewares",
             "App\\Models\\":"app/models",
-            "Database\\":"database/"
-        }
+            "Storage\\":"storage/"
+        },
+        "classmap": [
+            "app/"
+        ]
     },
     "authors": [
         {

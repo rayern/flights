@@ -1,7 +1,10 @@
 <?php 
 return [
     '/login' => [
-        'POST' => 'LoginController@login',
+        'POST' => 'UserController@login',
+    ],
+    '/register' => [
+        'POST' => 'UserController@register',
     ],
     '' => [
         'GET' => 'HomeController@home'

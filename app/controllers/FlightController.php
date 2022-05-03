@@ -8,31 +8,39 @@ class FlightController
     public function search($request){
         $validRequest = true;
         $resultData = [];
-        if($request['origin'] && $request['destination'] && $request['passengers'] && $request['departure']){
-            $flightsData = Flight::fetch(); 
-            foreach((array)$flightsData as $singleFlightData){
-                $departureDate = new \DateTime($singleFlightData['departure']);
-                if( $singleFlightData['origin'] == trim($request['origin']) && 
-                    $singleFlightData['destination'] == trim($request['destination']) &&
-                    $singleFlightData['availableSeats'] >= $request['passengers'] &&
-                    $departureDate->format('Y-m-d') == $request['departure']
-                    ){
-                        $resultData[] = $singleFlightData;
-                }
+        $filters = [];
+        if($request['origin']){
+            $filters['origin'] = trim($request['origin']);
+        }
+        if($request['destination']){
+            $filters['destination'] = trim($request['destination']);
+        }
+        if($request['passengers']){
+            $filters['availableSeats'] = $request['passengers'];
+        }
+        if($request['departure'] && strtotime($request['departure'])){
+            $filters['departure'] = $request['departure'];
+        }
+        if(count($filters) > 0){
+            $flights = Flight::fetch($filters);
+            if(count($flights) > 0){
+                $message = 'Success. Found '.count($flights).' records';
             }
-            $message = 'Found '.count($resultData).' records';
+            else{
+                $message = 'No records found';
+            }
         }
         else{
-            $message = 'Invalid request. Please check and try again';
+            $message = 'Please enter atleast one filter and try again';
             $validRequest = false;
         }
-        if($validRequest == true && count($resultData) == 0){
-            $message = 'No records found';
-        }
-        return ['code' => 200, 
+       
+        return [
+            'code' => 200, 
+            'success' => $validRequest,
             'data' => [
                 'message' => $message,
-                'data' => $resultData
+                'data' => $flights
             ]
         ];
     }

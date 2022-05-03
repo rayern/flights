@@ -12,7 +12,10 @@ class Server{
             $this->handleMiddlewares($routeData);
             $response = $this->loadController($routeData);
             http_response_code($response['code']);
-            echo json_encode(['success' => true, 'data' => $response['data']]);
+            echo json_encode([
+                'success' => $response['success'] ?? true,
+                 'data' => $response['data']
+            ]);
         } catch (\Exception $e) {
             http_response_code($e->getCode());
             echo json_encode(['success' => false, 'message' => $e->getMessage()]);
