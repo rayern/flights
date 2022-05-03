@@ -3,7 +3,7 @@
 namespace Database;
 
 class Database{
-    private $queryParams, $query, $enableLog = false;
+    private $connection, $queryParams, $query, $enableLog = false;
     public function __construct()
     {
     }
@@ -38,4 +38,34 @@ class Database{
     public function enableQueryLog(){
         $this->enableLog = true;
     }
+
+    public function insert($params){
+        $this->query = "INSERT INTO ".$this->queryParams['table'].'('.array_keys($params).') VALUES ('.array_values($params).')';
+
+    }
+
+    public function update($params){
+
+    }
+
+    public function runSQL(){
+        try{
+            $dsn = sprintf('mysql:dbname=%s;host=%s', $_ENV['DB_NAME'], $_ENV['DB_HOST']);
+            $options = [
+                \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
+                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+                \PDO::ATTR_EMULATE_PREPARES   => false,
+            ];
+            $pdo = new PDO($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $options);
+
+            $statement = $pdo->prepare($this->query);
+
+            $statement->execute(array(
+                'name' => $name,
+            ));
+        }catch(\Exception $e){  
+            Echo "Connection failed" . $e->getMessage();  
+        }  
+    }
+
 }
